@@ -33,6 +33,10 @@ const addCommandToLatestTransaction = (command) => {
 };
 
 const rollbackLatestTransaction = () => {
+    if (transactionStore.count === 0) {
+        console.log('TRANSACTION NOT FOUND');
+        return;
+    }
     while (transactionStore.latestTransaction.commandCount > 0) {
         const command = transactionStore.latestTransaction.commands[transactionStore.latestTransaction.commandCount];
         db[command.name] = command.previousValue;
